@@ -31,13 +31,16 @@
                                 @forelse ($posts as $post)
                                 <tr>
                                     <td class="text-center">
-                                        <img src="{{ Storage::url('public/posts/').$post->image }}" class="rounded" style="width: 150px">
+                                        <img src="{{ Storage::url('public/posts/').$post->image }}" class="rounded"
+                                            style="width: 150px">
                                     </td>
                                     <td>{{ $post->title }}</td>
                                     <td>{!! $post->content !!}</td>
                                     <td class="text-center">
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('posts.destroy', $post->id) }}" method="POST">
-                                            <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                            action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                                            <a href="{{ route('posts.edit', $post->id) }}"
+                                                class="btn btn-sm btn-primary">EDIT</a>
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
