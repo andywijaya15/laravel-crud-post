@@ -21,4 +21,45 @@ class PostController extends Controller
         // compact adalah command php untuk mengirim data posts ke view
         return view('posts.index', compact('posts'));
     }
+
+    /**
+     * create
+     *
+     * @return void
+     */
+    public function create()
+    {
+        // show view of views/posts/create
+        return view('posts.create');
+    }
+
+    /**
+     * store
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function store(Request $request)
+    {
+        //validate form
+        $this->validate($request, [
+            'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title'     => 'required|min:5',
+            'content'   => 'required|min:10'
+        ]);
+
+        //upload image
+        $image = $request->file('image');
+        $image->storeAs('public/posts', $image->hashName());
+
+        //create post
+        Post::create([
+            'image'     => $image->hashName(),
+            'title'     => $request->title,
+            'content'   => $request->content
+        ]);
+
+        //redirect to index
+        return redirect()->route('posts.index')->with(['success' => 'Data Berhasil Disimpan!']);
+    }
 }
