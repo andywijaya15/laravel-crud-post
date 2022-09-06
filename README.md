@@ -2,5 +2,4 @@
 
 ## Laravel CRUD
 
-Im learning laravel with CRUD.
-Using Laravel Storage to store image to server.
+Im learning laravel with CRUD using Laravel Storage to store image to server.
