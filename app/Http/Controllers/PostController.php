@@ -50,7 +50,7 @@ class PostController extends Controller
      */
     public function store(PostRequestStore $request)
     {
-        //upload image
+        //upload image menggunakan traits
         $image = $this->uploadImage($request, $path = 'public/posts');
 
         //create post
