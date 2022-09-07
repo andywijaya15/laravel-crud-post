@@ -9,9 +9,13 @@ use Illuminate\Support\Facades\Storage;
 // Menggunakan FormRequest untuk validasi
 use App\Http\Requests\PostRequestStore;
 use App\Http\Requests\PostRequestUpdate;
+// Menggunakan Trait agar functionnya menjadi reusable
+use App\Traits\HasImage;
 
 class PostController extends Controller
 {
+    // inheritence atau turunan,sehingga bisa menggunakan function dari Traits disini
+    use HasImage;
     /**
      * index
      *
@@ -47,8 +51,7 @@ class PostController extends Controller
     public function store(PostRequestStore $request)
     {
         //upload image
-        $image = $request->file('image');
-        $image->storeAs('public/posts', $image->hashName());
+        $image = $this->uploadImage($request, $path = 'public/posts');
 
         //create post
         Post::create([
@@ -85,13 +88,11 @@ class PostController extends Controller
     {
         //check if image is uploaded
         if ($request->hasFile('image')) {
-
-            //upload new image
-            $image = $request->file('image');
-            $image->storeAs('public/posts', $image->hashName());
-
             //delete old image
             Storage::delete('public/posts/' . $post->image);
+
+            // upload image using traits
+            $image = $this->uploadImage($request, $path = 'public/posts');
 
             //update post with new image
             $post->update([
