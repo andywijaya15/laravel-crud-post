@@ -10,3 +10,17 @@ Im learning laravel with CRUD using Laravel Storage to store image to server.
 - To upload image to Server we must link storage folder to public/storage folder with command ./vendor/bin/sail php artisan storage:link
 - Type ./vendor/bin/sail php artisan migrate to migrate database from laravel to mysql(if error,check your mysql in docker container,maybe its not runinng already)
 - Type ./vendor/bin/sail down to stop project
+
+## What i learned from this project
+
+### Laravel Sail
+- I can develop laravel easily with Laravel Sail. Laravel Sail is docker-compose that include all i need in laravel.It read .env and make mysql,mailhog,selenium and php so i dont need install it all one by one again.
+
+### Laravel Migration
+- I can makes table structure in my laravel and when i run php artisan migrate it will create table in database from what i created in database/migration
+
+### Laravel Traits
+- I can make resuabel function with Traits, it makes my controller clean. But there are no artisan command to make it,I must make it manually. After that i can use it in Controller. Dont forget to use class of Traits inside the class of Controller.
+
+### Laravel FormRequest
+- Write validation in controller is too long so i seperate it with Laravel FormRequest. First run php artisan make:request nameofYourValidatorNamed then laravel will makes file in app/Http/Requests/nameofYourValidatorNamed.php. Then set the value of authorize function from false to true then set the rules in rules function.
