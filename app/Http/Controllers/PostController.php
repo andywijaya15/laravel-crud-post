@@ -6,6 +6,9 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 // Menghapus Gambar dari Server
 use Illuminate\Support\Facades\Storage;
+// Menggunakan FormRequest untuk validasi
+use App\Http\Requests\PostRequestStore;
+use App\Http\Requests\PostRequestUpdate;
 
 class PostController extends Controller
 {
@@ -41,15 +44,8 @@ class PostController extends Controller
      * @param Request $request
      * @return void
      */
-    public function store(Request $request)
+    public function store(PostRequestStore $request)
     {
-        //validate form
-        $this->validate($request, [
-            'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'title'     => 'required|min:5',
-            'content'   => 'required|min:10'
-        ]);
-
         //upload image
         $image = $request->file('image');
         $image->storeAs('public/posts', $image->hashName());
@@ -85,15 +81,8 @@ class PostController extends Controller
      * @param  mixed $post
      * @return void
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequestUpdate $request, Post $post)
     {
-        //validate form
-        $this->validate($request, [
-            'image'     => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'title'     => 'required|min:5',
-            'content'   => 'required|min:10'
-        ]);
-
         //check if image is uploaded
         if ($request->hasFile('image')) {
 
